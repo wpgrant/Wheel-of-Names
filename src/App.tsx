@@ -24,7 +24,8 @@ export const MAX_PARTICIPANTS = 18;
 
 function App() {
   const [names, setNames] = useState<string[]>(['Amir','Derek','Doug','Eli','Jeremy','John','Matt','Pieter','Robert','Sarah','Tim']);
-  const [currentName, setCurrentName] = useState<string>('Name');
+  const [currentName, setCurrentName] = useState<string>('');
+  const [showParticipants, setShowParticipants] = useState<boolean>(true);
 
   const handleAddName = (name: string) => {
     if (names.length < MAX_PARTICIPANTS) {
@@ -57,18 +58,22 @@ function App() {
   return (
     <>
       <Header />
-      {/* <!-- <Question />*/}
+      {/* <Question />*/}
+      <button onClick={() => setShowParticipants((prev) => !prev)}>
+        {showParticipants ? 'Hide Participants' : 'Show Participants'}
+      </button>
       <ProgressBar 
         currentName={currentName}
       />
       <Main>
-        <Participants
+      {showParticipants && (<Participants
           handleAddName={handleAddName}
           handleRemoveName={handleRemoveName}
           shuffleNames={shuffleNames}
           sortNames={sortNames}
           names={names}
         />
+      )}
         <Wheel
           participants={names}
           handleCurrentName={handleCurrentName} 

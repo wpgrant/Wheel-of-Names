@@ -7,6 +7,7 @@ const ProgressContainer = styled.div`
   border-radius: 10px;
   overflow: hidden;
   margin: 10px 0;
+  position: relative; /* Add relative positioning for text overlay */
 `;
 
 const ProgressFill = styled.div<{ width: number }>`
@@ -15,6 +16,22 @@ const ProgressFill = styled.div<{ width: number }>`
   height: 20px;
   transition: width 0.3s ease-in-out;
 `;
+
+const ProgressText = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  pointer-events: none; /* Prevent text from interfering with clicks */
+`;
+
 
 interface ProgressBarProps {
   currentName: string;
@@ -30,7 +47,25 @@ export const ProgressBar: FC<ProgressBarProps> = ({
   };
 
   useEffect(() => {
+    // Reset progress when currentName changes
     setProgress(0);
+
+    // Increment progress over time
+    if (currentName !== '') {
+      const interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            return prev;
+          }
+          return prev + .033 ; // Increment by .05 every 100ms
+        });
+      }, 100); // Adjust the interval duration (100 ms)
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
   }, [currentName]);
 
   return (
@@ -38,8 +73,9 @@ export const ProgressBar: FC<ProgressBarProps> = ({
     <h1>{currentName}</h1>
     <ProgressContainer>
       <ProgressFill width={progress} />
+      <ProgressText>{Math.round(progress)}%</ProgressText>
     </ProgressContainer>
-    <button onClick={incrementProgress}>Increment Progress</button>
+    {/* <button onClick={incrementProgress}>Increment Progress</button> */}
     </div>
   );
 };
