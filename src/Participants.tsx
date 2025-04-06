@@ -80,7 +80,7 @@ export const Participants: FC<ParticipantsProps> = ({
 
   return (
     <Section>
-      <h2>Add Participants</h2>
+      <h3>Add Participants</h3>
       <Input
         disabled={isMaxParticipantsReached}
         type="text"
@@ -104,7 +104,7 @@ export const Participants: FC<ParticipantsProps> = ({
       >
         Add
       </Button>
-      <h2>Participants</h2>
+      <h3>Participants</h3>
       <ButtonGroup>
         <Button onClick={shuffleNames} disabled={!hasParticipants}>
           Shuffle

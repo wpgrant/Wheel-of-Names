@@ -40,6 +40,8 @@ const ButtonsContainer = styled.div`
 
 interface Props {
   participants: string[];
+  handleCurrentName: (name: string) => void;
+  removeParticipant: (name: string) => void;
 }
 
 const colors = [
@@ -68,7 +70,11 @@ const colors = [
   '#CC294F', // Darker hot pink
 ];
 
-export const Wheel: React.FC<Props> = ({ participants }) => {
+export const Wheel: React.FC<Props> = ({ 
+  participants,
+  handleCurrentName,
+  removeParticipant,
+}) => {
   const [spinning, setSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [spinDirection, setSpinDirection] = useState<
@@ -160,14 +166,14 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
     setSpinning(true);
 
     // Set the number of full rotations and calculate final rotation
-    const numFullRotations = Math.random() * 5 + 5; // Between 5 and 10 full rotations
+    const numFullRotations = Math.random() * 3 + 3; // Between 3 and 3 full rotations
     const totalRotation = numFullRotations * 360;
     const finalRotation =
       (rotation +
         (spinDirection === 'clockwise' ? -totalRotation : totalRotation)) %
       360;
 
-    const spinDuration = 6000;
+    const spinDuration = 3000;
     const easing = (t: number) => {
       // Ease-out cubic
       return 1 - Math.pow(1 - t, 3);
@@ -203,8 +209,15 @@ export const Wheel: React.FC<Props> = ({ participants }) => {
     const normalizedRotation = ((finalRotation % 360) + 360) % 360;
     const winningSector = Math.floor(normalizedRotation / sliceAngle);
 
-    setPopupWinner(participants[winningSector]);
+    const winner = participants[winningSector];
+    setPopupWinner(winner);
+    handleCurrentName(winner);
     setShowPopup(true);
+    
+    // Remove Winner after 10s
+    setTimeout(() => {
+      removeParticipant(winner)
+    }, 10000);
   };
 
   const changeSpinDirection = () => {

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 import { Participants } from './Participants';
-import { Question } from './Question';
+//import { Question } from './Question';
+import { ProgressBar } from './ProgressBar';
 import { Wheel } from './Wheel';
 
 import './App.css';
@@ -22,7 +23,8 @@ const Main = styled.main`
 export const MAX_PARTICIPANTS = 18;
 
 function App() {
-  const [names, setNames] = useState<string[]>([]);
+  const [names, setNames] = useState<string[]>(['Amir','Derek','Doug','Eli','Jeremy','John','Matt','Pieter','Robert','Sarah','Tim']);
+  const [currentName, setCurrentName] = useState<string>('Name');
 
   const handleAddName = (name: string) => {
     if (names.length < MAX_PARTICIPANTS) {
@@ -44,10 +46,21 @@ function App() {
     setNames(sortedNames);
   };
 
+  const handleCurrentName = (name: string) => {
+    setCurrentName(name);
+  };
+
+  const removeParticipant = (name: string) => {
+    setNames(names.filter((participant) => participant !== name));
+  };
+
   return (
     <>
       <Header />
-      <Question />
+      {/* <!-- <Question />*/}
+      <ProgressBar 
+        currentName={currentName}
+      />
       <Main>
         <Participants
           handleAddName={handleAddName}
@@ -56,7 +69,11 @@ function App() {
           sortNames={sortNames}
           names={names}
         />
-        <Wheel participants={names} />
+        <Wheel
+          participants={names}
+          handleCurrentName={handleCurrentName} 
+          removeParticipant={removeParticipant}
+        />
       </Main>
     </>
   );
