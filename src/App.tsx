@@ -25,7 +25,7 @@ export const MAX_PARTICIPANTS = 18;
 function App() {
   const [names, setNames] = useState<string[]>(['Amir','Derek','Doug','Eli','Jeremy','John','Matt','Pieter','Robert','Sarah','Tim']);
   const [currentName, setCurrentName] = useState<string>('');
-  const [showParticipants, setShowParticipants] = useState<boolean>(true);
+  const [showParticipants, setShowParticipants] = useState<boolean>(false);
 
   const handleAddName = (name: string) => {
     if (names.length < MAX_PARTICIPANTS) {
@@ -60,7 +60,7 @@ function App() {
       <Header />
       {/* <Question />*/}
       <button onClick={() => setShowParticipants((prev) => !prev)}>
-        {showParticipants ? 'Hide Participants' : 'Show Participants'}
+        {showParticipants ? 'Close' : 'Setup'}
       </button>
       <ProgressBar 
         currentName={currentName}

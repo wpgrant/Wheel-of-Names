@@ -46,6 +46,10 @@ export const ProgressBar: FC<ProgressBarProps> = ({
     setProgress((prev) => Math.min(prev + 10, 100)); // Increment by 10%, max 100%
   };
 
+  const isSpeakerTime = progress <= 60;
+  const isQATime = progress > 60 && progress < 100;
+  const isOvertime = progress >= 100;
+
   useEffect(() => {
     // Reset progress when currentName changes
     setProgress(0);
@@ -58,7 +62,8 @@ export const ProgressBar: FC<ProgressBarProps> = ({
             clearInterval(interval);
             return prev;
           }
-          return prev + .033 ; // Increment by .05 every 100ms
+          return prev + .033; // Increment by .05 every 100ms
+          //return prev + 1; // for testing
         });
       }, 100); // Adjust the interval duration (100 ms)
 
@@ -70,7 +75,16 @@ export const ProgressBar: FC<ProgressBarProps> = ({
 
   return (
     <div>
-    <h1>{currentName}</h1>
+    {isSpeakerTime && (
+      <h1>{currentName} only</h1>
+    )}
+    {isQATime && (
+      <h1>Ask {currentName} Questions</h1>
+    )}
+    {isOvertime && (
+      <h1>We need to spin!</h1>
+    )}
+
     <ProgressContainer>
       <ProgressFill width={progress} />
       <ProgressText>{Math.round(progress)}%</ProgressText>
