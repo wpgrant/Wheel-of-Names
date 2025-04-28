@@ -16,6 +16,6 @@ const HeaderContainer = styled.header`
 
 export const Header: FC = () => (
   <HeaderContainer>
-    <h1><img src={logo} height={'35px'} /> Specialist Standup Spinner</h1>
+    <h1><img src={logo} height={'35px'} /> Strategist Standup Spinner</h1>
   </HeaderContainer>
 );
