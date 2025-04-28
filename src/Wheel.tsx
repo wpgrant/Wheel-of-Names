@@ -182,7 +182,7 @@ export const Wheel: React.FC<Props> = ({
     setSpinning(true);
 
     // Set the number of full rotations and calculate final rotation
-    const numFullRotations = Math.random() * 3 + 3; // Between 3 and 3 full rotations
+    const numFullRotations = Math.random() * 3 + 3; // Between 3 and 6 full rotations
     const totalRotation = numFullRotations * 360;
     const finalRotation =
       (rotation +
