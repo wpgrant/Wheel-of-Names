@@ -23,7 +23,7 @@ const Main = styled.main`
 export const MAX_PARTICIPANTS = 18;
 
 function App() {
-  const [names, setNames] = useState<string[]>(['Amir','Derek','Doug','Eli','Jeremy','John','Matt','Pieter','Robert','Sarah','Tim']);
+  const [names, setNames] = useState<string[]>(['Name1', 'Name2', 'Name3']);
   const [currentName, setCurrentName] = useState<string>('');
   const [showParticipants, setShowParticipants] = useState<boolean>(false);
 
