@@ -26,6 +26,8 @@ function App() {
   const [names, setNames] = useState<string[]>(['Name1', 'Name2', 'Name3']);
   const [currentName, setCurrentName] = useState<string>('');
   const [showParticipants, setShowParticipants] = useState<boolean>(false);
+  const [mode, setMode] = useState<'spinner' | 'list'>('spinner'); // Default to spinner mode
+  const [currentIndex, setCurrentIndex] = useState<number>(0); // Track the current index for list mode
 
   const handleAddName = (name: string) => {
     if (names.length < MAX_PARTICIPANTS) {
@@ -55,30 +57,58 @@ function App() {
     setNames(names.filter((participant) => participant !== name));
   };
 
+  const handleNext = () => {
+    if (names.length > 0) {
+      const nextName = names[0]; // Get the first name in the list
+      setCurrentName(nextName); // Set it as the current name
+      setNames((prevNames) => prevNames.slice(1)); // Remove it from the list
+    }
+  };
+
   return (
     <>
       <Header />
-      {/* <Question />*/}
       <button onClick={() => setShowParticipants((prev) => !prev)}>
         {showParticipants ? 'Close' : 'Setup'}
       </button>
-      <ProgressBar 
-        currentName={currentName}
-      />
+      <div>
+        <button onClick={() => setMode('spinner')}>Spinner Mode</button>
+        <button onClick={() => setMode('list')}>List Mode</button>
+      </div>
+      <ProgressBar currentName={currentName} />
       <Main>
-      {showParticipants && (<Participants
-          handleAddName={handleAddName}
-          handleRemoveName={handleRemoveName}
-          shuffleNames={shuffleNames}
-          sortNames={sortNames}
-          names={names}
-        />
-      )}
-        <Wheel
-          participants={names}
-          handleCurrentName={handleCurrentName} 
-          removeParticipant={removeParticipant}
-        />
+        {showParticipants && (
+          <Participants
+            handleAddName={handleAddName}
+            handleRemoveName={handleRemoveName}
+            shuffleNames={shuffleNames}
+            sortNames={sortNames}
+            names={names}
+          />
+        )}
+        {mode === 'spinner' ? (
+          <Wheel
+            participants={names}
+            handleCurrentName={handleCurrentName}
+            removeParticipant={removeParticipant}
+          />
+        ) : (
+          <div>
+            <h2>List Mode</h2>
+            <h3>Current Participant: {currentName || 'None'}</h3>
+            <button
+              onClick={handleNext}
+              disabled={names.length === 0}
+            >
+              Next
+            </button>
+            <ul>
+              {names.map((name, index) => (
+                <li key={index}>{name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </Main>
     </>
   );

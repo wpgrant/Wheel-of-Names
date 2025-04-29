@@ -41,6 +41,7 @@ interface ParticipantsProps {
   shuffleNames: () => void;
   sortNames: () => void;
   names: string[];
+  mode: string; // Add mode to the interface
 }
 
 export const Participants: FC<ParticipantsProps> = ({
@@ -49,6 +50,7 @@ export const Participants: FC<ParticipantsProps> = ({
   shuffleNames,
   sortNames,
   names,
+  mode, // Destructure mode
 }) => {
   const [participant, setParticipant] = useState('');
   const [error, setError] = useState('');
