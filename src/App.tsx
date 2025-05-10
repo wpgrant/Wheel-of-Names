@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Participants } from './Participants';
 //import { Question } from './Question';
 import { ProgressBar } from './ProgressBar';
+import { MeetingOnTime } from './MeetingOnTime';
 import { Wheel } from './Wheel';
 
 import './App.css';
@@ -78,6 +79,7 @@ function App() {
         <button onClick={() => setMode('list')}>List Mode</button>
       </div>
       <ProgressBar currentName={currentName} />
+      <MeetingOnTime names={names} />
       <Main>
         {showParticipants && (
           <Participants

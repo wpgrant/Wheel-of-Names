@@ -82,25 +82,9 @@ export const Wheel: React.FC<Props> = ({
   >('clockwise');
   const [showPopup, setShowPopup] = useState(false);
   const [popupWinner, setPopupWinner] = useState<string | null>(null);
-  const [isMeetingOnTime, setIsMeetingOnTime] = useState(true);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const numSectors = participants.length;
-
-  const calculateMeetingStatus = () => {
-    const remainingMinutes = 60 - new Date().getMinutes();
-    const requiredMinutes = participants.length * 5;
-    return requiredMinutes < remainingMinutes;
-  };
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsMeetingOnTime(calculateMeetingStatus());
-    }, 10000);
-    setIsMeetingOnTime(calculateMeetingStatus());
-    return () => clearInterval(interval);
-  }, [participants]);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -260,11 +244,6 @@ export const Wheel: React.FC<Props> = ({
 
   return (
     <div>
-      {isMeetingOnTime ? (
-        <h1>Meeting is on time</h1>
-      ) : (
-        <h1 style={{ color: 'red' }}>Meeting is running late</h1>
-      )}
       <canvas
         ref={canvasRef}
         width={400}
