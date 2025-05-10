@@ -9,6 +9,8 @@ import './App.css';
 import { useState } from 'react';
 import { Header } from './Header';
 
+import team from './TeamNames.json';
+
 const Main = styled.main`
   display: flex;
   justify-content: space-around;
@@ -23,7 +25,7 @@ const Main = styled.main`
 export const MAX_PARTICIPANTS = 18;
 
 function App() {
-  const [names, setNames] = useState<string[]>(['Name1', 'Name2', 'Name3']);
+  const [names, setNames] = useState<string[]>(team);
   const [currentName, setCurrentName] = useState<string>('');
   const [showParticipants, setShowParticipants] = useState<boolean>(false);
   const [mode, setMode] = useState<'spinner' | 'list'>('spinner'); // Default to spinner mode
